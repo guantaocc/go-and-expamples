@@ -7,10 +7,8 @@ type Stack struct {
 	items []stackItem
 }
 
-// new stack
-func (s *Stack) New() *Stack {
-	s.items = make([]stackItem, 0)
-	return s
+func NewStack() *Stack {
+	return &Stack{items: make([]stackItem, 0)}
 }
 
 // add stack item
@@ -24,9 +22,13 @@ func (s *Stack) Push(item ...interface{}) *Stack {
 
 // 出栈
 func (s *Stack) Pop() interface{} {
-	popItem := s.items[:1]
-	s.items = s.items[1:]
-	return popItem
+	if !s.IsEmpty() {
+		popItem := s.items[len(s.items)-1]
+		s.items = s.items[:len(s.items)-1]
+		return popItem
+	} else {
+		return nil
+	}
 }
 
 // is empty
